@@ -1,6 +1,9 @@
+import { DisplayGraph } from "./components/Graph"
+
+
 const App = () => {
   return (
-    <div>App</div>
+    <DisplayGraph />
   )
 }
 
