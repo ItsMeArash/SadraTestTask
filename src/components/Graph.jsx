@@ -1,12 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useMemo } from "react";
-// import Graph from "graphology";
 import { SigmaContainer, useLoadGraph } from "@react-sigma/core";
 import "@react-sigma/core/lib/react-sigma.min.css";
 import { faker } from "@faker-js/faker";
 import { UndirectedGraph } from "graphology";
-import erdosRenyi from "graphology-generators/random/erdos-renyi"
-
-
+import erdosRenyi from "graphology-generators/random/erdos-renyi";
 
 export const LoadGraph = () => {
   const loadGraph = useLoadGraph();
@@ -24,8 +22,8 @@ export const LoadGraph = () => {
 
   useEffect(() => {
     const graph = erdosRenyi(UndirectedGraph, {
-      order: 20,
-      probability: .2
+      order: 2,
+      probability: 0.2,
     });
 
     graph.nodes().forEach((node) => {
@@ -34,12 +32,13 @@ export const LoadGraph = () => {
         size: Math.floor(Math.random() * 15) + 5,
         color: randomColor(),
         x: Math.random(),
-        y: Math.random()
+        y: Math.random(),
       });
     });
+
     graph.edges().forEach((edge) => {
       graph.mergeEdgeAttributes(edge, {
-        weight: Math.random()
+        weight: Math.random(),
       });
     });
     loadGraph(graph);
@@ -48,11 +47,8 @@ export const LoadGraph = () => {
 
 export const DisplayGraph = () => {
   return (
-    <>
-      <h1>Just Testing</h1>
-      <SigmaContainer style={{ height: "100vh", width: "100vw" }}>
-        <LoadGraph />
-      </SigmaContainer>
-    </>
+    <SigmaContainer style={{ height: "100vh", width: "100vw" }}>
+      <LoadGraph />
+    </SigmaContainer>
   );
 };
