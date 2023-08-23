@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import PropTypes from "prop-types";
 import { useEffect, useMemo } from "react";
 import { SigmaContainer, useLoadGraph } from "@react-sigma/core";
 import "@react-sigma/core/lib/react-sigma.min.css";
@@ -6,7 +7,8 @@ import { faker } from "@faker-js/faker";
 import { UndirectedGraph } from "graphology";
 import erdosRenyi from "graphology-generators/random/erdos-renyi";
 
-export const LoadGraph = () => {
+export const LoadGraph = ({ useStore }) => {
+  const { newNode } = useStore();
   const loadGraph = useLoadGraph();
 
   const randomColor = useMemo(() => {
@@ -36,19 +38,33 @@ export const LoadGraph = () => {
       });
     });
 
+    if(Object.keys(newNode).length) {
+      graph.addNode(newNode.nodeLabel.toLowerCase().replace(" ", "-"), {
+        label: newNode.nodeLabel,
+        size: newNode["input-number"],
+        color: `#${newNode["color-picker"].toHex()}`,
+        x: Math.random(),
+        y: Math.random(),
+      })
+    }
+
     graph.edges().forEach((edge) => {
       graph.mergeEdgeAttributes(edge, {
         weight: Math.random(),
       });
     });
     loadGraph(graph);
-  }, [loadGraph]);
+  }, [loadGraph, newNode]);
 };
 
-export const DisplayGraph = () => {
+export const DisplayGraph = ({useStore}) => {
   return (
     <SigmaContainer style={{ height: "100vh", width: "100vw" }}>
-      <LoadGraph />
+      <LoadGraph useStore={useStore}/>
     </SigmaContainer>
   );
+};
+
+DisplayGraph.propTypes = {
+  useStore: PropTypes.func.isRequired,
 };

@@ -15,10 +15,12 @@
     "graphology": "^0.25.4",
     "graphology-generators": "^0.11.2",
     "lodash": "^4.17.21",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-sigma": "^1.2.35",
-    "sigma": "^2.4.0"
+    "sigma": "^2.4.0",
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
