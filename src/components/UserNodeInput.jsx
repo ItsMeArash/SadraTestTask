@@ -18,15 +18,18 @@ const formItemLayout = {
   },
 };
 
-
 const UserNodeInput = ({ useStore }) => {
-  const { setNewNode } = useStore();
+  const { nodes, setNodes } = useStore();
+
+  const onFinish = (values) => {
+    setNodes(values);
+  };
 
   return (
     <Form
       name="validate_other"
       {...formItemLayout}
-      onFinish={(values) => setNewNode(values)}
+      onFinish={onFinish}
       initialValues={{
         "color-picker": null,
       }}
@@ -65,9 +68,14 @@ const UserNodeInput = ({ useStore }) => {
         ]}
       >
         <Select mode="multiple" placeholder="Please select node relations">
-          {/* Todo */}
-          {/* map over nodes and return an Option for each one */}
-          <Option value="red">Red</Option>
+          {nodes.map((node) => (
+            <Option
+              key={node.nodeLabel.toLowerCase().replace(" ", "-")}
+              value={node.nodeLabel.toLowerCase().replace(" ", "-")}
+            >
+              {node.nodeLabel}
+            </Option>
+          ))}
         </Select>
       </Form.Item>
 
@@ -115,7 +123,7 @@ const UserNodeInput = ({ useStore }) => {
 };
 
 UserNodeInput.propTypes = {
-  useStore: PropTypes.func.isRequired,
+  useStore: PropTypes.object.isRequired,
 };
 
 export default UserNodeInput;

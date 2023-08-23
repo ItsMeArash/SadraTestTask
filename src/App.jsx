@@ -3,8 +3,8 @@ import UserNodeInput from "./components/userNodeInput";
 import { create } from "zustand";
 
 const useStore = create((set) => ({
-  newNode: {},
-  setNewNode: (node) => set(() => ({ newNode: node })),
+  nodes: [],
+  setNodes: (node) => set((state) => ({ nodes: [...state.nodes, node] })),
 }));
 
 const App = () => {
