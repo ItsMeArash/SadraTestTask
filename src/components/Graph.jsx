@@ -27,10 +27,23 @@ export const LoadGraph = ({ useStore }) => {
         alert("Error in adding node");
       }
     }
-    graph.edges().forEach((edge) => {
-      graph.mergeEdgeAttributes(edge, {
-        weight: Math.random(),
-      });
+
+    nodes.forEach((node) => {
+      if (node["select-multiple"]) {
+        node["select-multiple"].forEach((relation) => {
+          const sourceNode = node.nodeLabel.toLowerCase().replace(" ", "-");
+          const targetNode = relation.toLowerCase().replace(" ", "-");
+
+          if (!graph.hasEdge(sourceNode, targetNode)) {
+            graph.addEdgeWithKey(
+              `${sourceNode}-${targetNode}`,
+              sourceNode,
+              targetNode,
+              { label: `${sourceNode}-${targetNode}` }
+            );
+          }
+        });
+      }
     });
 
     loadGraph(graph);
